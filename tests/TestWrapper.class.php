@@ -11,9 +11,9 @@ class TestWrapper
   
   const REAL_TO_FAKE_RATIO = 1;
   
-  protected $available_classes = array(
-    self::CLASS_BROWSCAP,
-    self::CLASS_MOBILE_DETECT_PARTIAL
+  protected static $available_classes = array(
+    self::CLASS_BROWSCAP => 'browscap',
+    self::CLASS_MOBILE_DETECT_PARTIAL => 'Mobile_Detect partial'
   );
   
   protected $has_opcache;
@@ -21,6 +21,8 @@ class TestWrapper
   protected $echo_progress;
   
   protected $ua_examples_file = 'user-agent-examples.txt';
+  
+  protected $webserver_prefix = 'http://localhost/speed-tests/';
   
   protected $real_uas_count;
   
@@ -33,21 +35,13 @@ class TestWrapper
     TWTimer::$echo_progress = $this->echo_progress;
   }
   
-  public function executeOneTest($class_name, $bulk_check)
+  public function executeAllTests()
   {
-    if (!in_array($class_name, $this->available_classes))
-    {
-      throw new Exception('Class name not one of: ' . implode(', ', $this->available_classes));
-    }
+    $this->executeOneTest(self::CLASS_BROWSCAP, true, true);
+    $this->executeOneTest(self::CLASS_BROWSCAP, false, true);
     
-    $bulk_check = self::getBoolean($bulk_check);
-    
-    if ($this->echo_progress)
-    {
-      echo "\n";
-    }
-    
-    $this->{'test' . str_replace(' ', '', ucwords(str_replace('-', ' ', $class_name))) . ($bulk_check ? '_bulk' : '')}();
+    $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, true, true);
+    $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, false, true);
     
     if ($this->echo_progress)
     {
@@ -59,59 +53,144 @@ class TestWrapper
     }
   }
   
-  protected function testMdShort_bulk()
+  public function executeOneTest($class_name, $bulk_check, $no_summary = false)
   {
-    // initialize and preload with the first call
-    require_once 'md/Mobile_Detect.php';
-    $md = new Mobile_Detect(array('' => 'x'), self::TEST_USER_AGENT);
+    if (!isset(self::$available_classes[$class_name]))
+    {
+      throw new Exception('Class name not one of: ' . implode(', ', array_keys(self::$available_classes)));
+    }
+    
+    $bulk_check = self::getBoolean($bulk_check);
+    
+    if ($this->echo_progress)
+    {
+      echo "\n";
+    }
+    
+    if ($bulk_check)
+    {
+      $this->testBulk($class_name);
+    }
+    else
+    {
+      $this->testOnePerScript($class_name);
+    }
+    
+    if ($no_summary)
+    {
+      return;
+    }
+    
+    if ($this->echo_progress)
+    {
+      TWTimer::printResults();
+    }
+    else
+    {
+      return TWTimer::getResults();
+    }
+  }
+  
+  protected function testOnePerScript($class)
+  {
+    $timer_name = self::$available_classes[$class];
+    
+    if ($pos = strpos($class, '-'))
+    {
+      $test_uri = explode('-', $class, 2);
+      $test_uri = $test_uri[0] . '/test-' . $test_uri[1] . '.php';
+    }
+    else
+    {
+      $test_uri = $class . '/test.php';
+    }
+    
+    $test_uri = $this->webserver_prefix . $test_uri;
     
     // test real user agents
-    TWTimer::begin('Mobile_Detect partial - real - bulk', $this->has_opcache);
+    TWTimer::begin($timer_name . ' - real - one per script', $this->has_opcache);
+    foreach ($this->getRealUserAgents() as $one_agent)
+    {
+      $time = $this->ExecuteExternalTest($test_uri, $one_agent);
+      TWTimer::add($time);
+    }
+    TWTimer::end();
+    
+    // test fake user agents
+    TWTimer::begin($timer_name . ' - fake - one per script', $this->has_opcache);
+    foreach ($this->getFakeUserAgents() as $one_agent)
+    {
+      $time = $this->ExecuteExternalTest($test_uri, $one_agent);
+      TWTimer::add($time);
+    }
+    TWTimer::end();
+  }
+  
+  protected function testBulk($class)
+  {
+    $cc_class_name = self::nameToCamelCase($class);
+    $timer_name = self::$available_classes[$class];
+    $method = 'bulkTest' . $cc_class_name;
+    
+    // initialize and preload
+    $result = $this->{'bulkInit' . $cc_class_name}();
+    
+    // test real user agents
+    TWTimer::begin($timer_name . ' - real - bulk', $this->has_opcache);
     foreach ($this->getRealUserAgents() as $one_agent)
     {
       TWTimer::start();
-      $a = $md->isMobile($one_agent);
-      $b = $md->isTablet($one_agent);
+      $this->$method($one_agent, $result);
       TWTimer::stop();
     }
     TWTimer::end();
     
     // test fake user agents
-    TWTimer::begin('Mobile_Detect partial - fake - bulk', $this->has_opcache);
+    TWTimer::begin($timer_name . ' - fake - bulk', $this->has_opcache);
     foreach ($this->getFakeUserAgents() as $one_agent)
     {
       TWTimer::start();
-      $a = $md->isMobile($one_agent);
-      $b = $md->isTablet($one_agent);
+      $this->$method($one_agent, $result);
       TWTimer::stop();
     }
     TWTimer::end();
   }
   
-  protected function testBrowscap_bulk()
+  protected function bulkInitMdShort()
   {
-    // initialize and preload with the first call
+    require_once 'md/Mobile_Detect.php';
+    
+    return new Mobile_Detect(array('' => 'x'), self::TEST_USER_AGENT);
+  }
+  
+  protected function bulkTestMdShort($user_agent, Mobile_Detect $md)
+  {
+    $md->isMobile($user_agent);
+    $md->isTablet($user_agent);
+  }
+  
+  protected function bulkInitBrowscap()
+  {
     get_browser(self::TEST_USER_AGENT);
+  }
+  
+  protected function bulkTestBrowscap($user_agent)
+  {
+    get_browser($user_agent);
+  }
+  
+  protected function executeExternalTest($uri, $user_agent)
+  {
+    $uri = $uri . '?opc=' . $this->has_opcache . '&ua=' . urlencode($user_agent);
     
-    // test real user agents
-    TWTimer::begin('browscap - real - bulk', $this->has_opcache);
-    foreach ($this->getRealUserAgents() as $one_agent)
-    {
-      TWTimer::start();
-      $a = get_browser($one_agent);
-      TWTimer::stop();
-    }
-    TWTimer::end();
+    $output = file_get_contents($uri);
     
-    // test fake user agents
-    TWTimer::begin('browscap - fake - bulk', $this->has_opcache);
-    foreach ($this->getFakeUserAgents() as $one_agent)
+    if (!is_numeric($output))
     {
-      TWTimer::start();
-      $a = get_browser($one_agent);
-      TWTimer::stop();
+      throw new Exception("Calling $uri resulted in following output:\n$output");
     }
-    TWTimer::end();
+    
+    return (float) $output;
   }
   
   protected function getRealUserAgents()
@@ -154,6 +233,11 @@ class TestWrapper
     {
       return (boolean) $value;
     }
+  }
+  
+  protected static function nameToCamelCase($name)
+  {
+    return str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
   }
 }
 

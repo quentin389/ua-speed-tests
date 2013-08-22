@@ -16,7 +16,7 @@ class TWTimer
   public static $echo_progress_interval = 100;
   public static $echo_progress_string = '.';
   
-  protected static $tests;
+  protected static $tests = array();
   
   protected static $current_test;
   
@@ -104,14 +104,17 @@ class TWTimer
     
     self::$current_timer = null;
     
-    self::$tests[self::$current_test][self::TIMER_COUNT]++;
-    self::$tests[self::$current_test][self::TIMER_TOTAL] += $time;
-    self::$tests[self::$current_test][self::TIMER_ALL][] = $time;
-    
-    if (self::$echo_progress && 0 === self::$tests[self::$current_test][self::TIMER_COUNT] % self::$echo_progress_interval)
+    self::saveTimeResult($time);
+  }
+  
+  public static function add($time)
+  {
+    if (null !== self::$current_timer || !is_float($time) || $time <= 0)
     {
-      echo self::$echo_progress_string;
+      throw new Exception('You shall not pass!');
     }
+    
+    self::saveTimeResult($time);
   }
   
   public static function end()
@@ -128,6 +131,18 @@ class TWTimer
     self::$tests[self::$current_test][self::TIMER_PERCENTILE_99] = self::getPercentile($all_data, 99);
     self::$tests[self::$current_test][self::TIMER_MIN] = array_shift($all_data);
     self::$tests[self::$current_test][self::TIMER_MAX] = array_pop($all_data);
+  }
+  
+  protected static function saveTimeResult($time)
+  {
+    self::$tests[self::$current_test][self::TIMER_COUNT]++;
+    self::$tests[self::$current_test][self::TIMER_TOTAL] += $time;
+    self::$tests[self::$current_test][self::TIMER_ALL][] = $time;
+    
+    if (self::$echo_progress && 0 === self::$tests[self::$current_test][self::TIMER_COUNT] % self::$echo_progress_interval)
+    {
+      echo self::$echo_progress_string;
+    }
   }
   
   protected static function getPercentile($data, $percentile)

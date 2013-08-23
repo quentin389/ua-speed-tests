@@ -8,12 +8,14 @@ class TestWrapper
   
   const CLASS_BROWSCAP = 'browscap';
   const CLASS_MOBILE_DETECT_PARTIAL = 'md-short';
+  const CLASS_MOBILE_DETECT_FULL = 'md-full';
   
   const REAL_TO_FAKE_RATIO = 1;
   
   protected static $available_classes = array(
     self::CLASS_BROWSCAP => 'browscap',
-    self::CLASS_MOBILE_DETECT_PARTIAL => 'Mobile_Detect partial'
+    self::CLASS_MOBILE_DETECT_PARTIAL => 'Mobile_Detect partial',
+    self::CLASS_MOBILE_DETECT_FULL => 'Mobile_Detect full'
   );
   
   protected $has_opcache;
@@ -42,6 +44,9 @@ class TestWrapper
     
     $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, true, true);
     $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, false, true);
+    
+    $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, true, true);
+    $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, false, true);
     
     if ($this->echo_progress)
     {
@@ -163,10 +168,35 @@ class TestWrapper
     return new Mobile_Detect(array('' => 'x'), self::TEST_USER_AGENT);
   }
   
+  protected function bulkInitMdFull()
+  {
+    require_once 'md/Mobile_Detect.php';
+    
+    $this->md_browsers = array_keys(Mobile_Detect::getUserAgents());
+    $this->md_devices = array_keys(Mobile_Detect::getPhoneDevices() + Mobile_Detect::getTabletDevices());
+    $this->md_oses = array_keys(Mobile_Detect::getOperatingSystems());
+    
+    return new Mobile_Detect(array('' => 'x'), self::TEST_USER_AGENT);
+  }
+  
   protected function bulkTestMdShort($user_agent, Mobile_Detect $md)
   {
-    $md->isMobile($user_agent);
-    $md->isTablet($user_agent);
+    $md->setUserAgent($user_agent);
+    $md->isMobile();
+    $md->isTablet();
+  }
+  
+  protected function bulkTestMdFull($user_agent, Mobile_Detect $md)
+  {
+    $md->setUserAgent($user_agent);
+    $md->isMobile();
+    $md->isTablet();
+    $md->is('Bot');
+    $md->is('MobileBot');
+    foreach ($this->md_browsers as $one_browser) if ($md->is($one_browser)) break;
+    foreach ($this->md_devices as $one_device) if ($md->is($one_device)) break;
+    foreach ($this->md_oses as $one_os) if ($md->is($one_os)) break;
+    $md->mobileGrade();
   }
   
   protected function bulkInitBrowscap()

@@ -1,21 +1,3 @@
-ua-speed-tests
-==============
-
-Compare performance of user agent detecting classes used in PHP. Single and bulk reading. Compared: Mobile-Detect, ua-parser, browscap, UserAgentInfo, ...
-
-The classes are all CPU bound (at least on my config with apache).
-
-* **browscap** - PHP standard `get_browser()` call (btw: add benchmarks for lite/full source file.
-* **Mobile_Detect partial** - `Mobile_Detect->isMobile()` + `Mobile_Detect->isTablet()` calls.
-* **opcache** - Zend Opcache is a bytecode cache for PHP - something you should be using on your production servers, especially for huge frameworks. Alternatives: APC (the bytecode part, not the key-value store), Eaccelerator, ... (?)
-
-
-Add tests for many calls to the same thing during one script calls (not batch mode though, simulate standard user)? I'm not sure if it makes sense, I can just write 'caches calls locally': true / false.
-Add test for repeated found and not found user agent string.
-Add % of detected browsers. (as a separate test)
-Add most popular recent user agents to the file (not only those not detected by browscap! (www.vwp-online.de/ua.php + list for browscap + my list + ua-parser + md)
-
-
 name | version | ua list | bulk | opcache | total (sec) | calls | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
 :--- | :--- | :---: | :---: | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---:
 md partial | 2.6.7 | real | no | off | 6.0 | 2506 | **2.4** | 0.5 | 2.3 | 3.7 | 4.8 | 6.2
@@ -58,3 +40,4 @@ browscap | 5020 full | real | yes | off | 108.3 | 2506 | **43.2** | 5.0 | 43.3 |
 browscap | 5020 full | fake | yes | off | 98.4 | 2506 | **39.3** | 36.9 | 39.0 | 41.9 | 44.0 | 54.7
 browscap | 5020 full | real | yes | on | 110.1 | 2506 | **44.0** | 5.6 | 44.0 | 50.0 | 53.1 | 77.5
 browscap | 5020 full | fake | yes | on | 101.8 | 2506 | **40.6** | 36.6 | 40.3 | 44.1 | 45.8 | 49.7
+

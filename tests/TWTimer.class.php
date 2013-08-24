@@ -109,7 +109,7 @@ class TWTimer
   
   public static function add($time)
   {
-    if (null !== self::$current_timer || !is_float($time) || $time <= 0)
+    if (null !== self::$current_timer || !is_float($time) || $time < 0)
     {
       throw new Exception('You shall not pass!');
     }

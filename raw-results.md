@@ -1,43 +1,40 @@
-name | version | ua list | bulk | opcache | total (sec) | calls | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
-:--- | :--- | :---: | :---: | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---:
-md partial | 2.6.7 | real | no | off | 6.0 | 2506 | **2.4** | 0.5 | 2.3 | 3.7 | 4.8 | 6.2
-md partial | 2.6.7 | fake | no | off | 5.9 | 2506 | **2.3** | 0.9 | 2.3 | 3.1 | 3.6 | 4.0
-md partial | 2.6.7 | real | no | on | 4.3 | 2506 | **1.7** | 0.0 | 1.6 | 3.0 | 4.1 | 7.0
-md partial | 2.6.7 | fake | no | on | 4.1 | 2506 | **1.6** | 0.4 | 1.6 | 2.3 | 2.8 | 3.4
-md partial | 2.6.7 | real | yes | off | 4.1 | 2506 | **1.7** | 0.0 | 1.6 | 3.0 | 3.9 | 5.1
-md partial | 2.6.7 | fake | yes | off | 3.9 | 2506 | **1.6** | 0.2 | 1.6 | 2.2 | 2.5 | 2.9
-md partial | 2.6.7 | real | yes | on | 4.0 | 2506 | **1.6** | 0.0 | 1.5 | 2.9 | 3.9 | 5.8
-md partial | 2.6.7 | fake | yes | on | 3.8 | 2506 | **1.5** | 0.2 | 1.5 | 2.2 | 2.6 | 3.2
-md full | 2.6.7 | real | no | off | 16.2 | 2506 | **6.5** | 0.5 | 6.6 | 9.5 | 12.8 | 15.4
-md full | 2.6.7 | fake | no | off | 16.9 | 2506 | **6.7** | 2.1 | 6.8 | 7.8 | 8.2 | 8.7
-md full | 2.6.7 | real | no | on | 14.3 | 2506 | **5.7** | 0.6 | 5.8 | 8.6 | 11.8 | 14.9
-md full | 2.6.7 | fake | no | on | 14.8 | 2506 | **5.9** | 1.9 | 5.9 | 6.9 | 7.3 | 8.1
-md full | 2.6.7 | real | yes | off | 14.3 | 2506 | **5.7** | 0.2 | 5.8 | 8.6 | 12.2 | 16.8
-md full | 2.6.7 | fake | yes | off | 14.9 | 2506 | **5.9** | 1.7 | 6.0 | 6.9 | 7.3 | 8.2
-md full | 2.6.7 | real | yes | on | 13.8 | 2506 | **5.5** | 0.4 | 5.6 | 8.5 | 11.7 | 14.7
-md full | 2.6.7 | fake | yes | on | 14.4 | 2506 | **5.7** | 1.7 | 5.8 | 6.7 | 7.0 | 7.4
-browscap | 5020 lite | real | no | off | 9.2 | 2506 | **3.7** | 0.3 | 3.6 | 6.8 | 8.3 | 13.4
-browscap | 5020 lite | fake | no | off | 3.0 | 2506 | **1.2** | 0.3 | 1.2 | 1.9 | 2.3 | 2.6
-browscap | 5020 lite | real | no | on | 9.2 | 2506 | **3.7** | 0.3 | 3.6 | 6.8 | 8.4 | 25.4
-browscap | 5020 lite | fake | no | on | 2.9 | 2506 | **1.2** | 0.2 | 1.1 | 1.8 | 2.0 | 2.7
-browscap | 5020 lite | real | yes | off | 9.1 | 2506 | **3.6** | 0.1 | 3.5 | 6.8 | 7.9 | 12.4
-browscap | 5020 lite | fake | yes | off | 2.8 | 2506 | **1.1** | 0.0 | 1.1 | 1.7 | 2.1 | 2.7
-browscap | 5020 lite | real | yes | on | 9.1 | 2506 | **3.6** | 0.3 | 3.6 | 6.8 | 8.0 | 13.2
-browscap | 5020 lite | fake | yes | on | 2.7 | 2506 | **1.1** | 0.1 | 1.0 | 1.7 | 2.0 | 2.6
-browscap | 5020 standard | real | no | off | 56.4 | 2506 | **22.5** | 2.0 | 22.6 | 27.1 | 28.6 | 39.4
-browscap | 5020 standard | fake | no | off | 46.7 | 2506 | **18.6** | 16.2 | 18.6 | 19.9 | 21.2 | 29.8
-browscap | 5020 standard | real | no | on | 58.3 | 2506 | **23.3** | 3.1 | 23.4 | 27.9 | 30.0 | 37.8
-browscap | 5020 standard | fake | no | on | 47.8 | 2506 | **19.1** | 16.6 | 19.0 | 20.7 | 21.9 | 25.0
-browscap | 5020 standard | real | yes | off | 109.2 | 2506 | **43.6** | 4.7 | 43.7 | 49.4 | 55.1 | 70.4
-browscap | 5020 standard | fake | yes | off | 99.4 | 2506 | **39.7** | 36.2 | 38.7 | 47.0 | 52.0 | 76.4
-browscap | 5020 standard | real | yes | on | 106.0 | 2506 | **42.3** | 4.8 | 42.5 | 47.0 | 49.4 | 55.5
-browscap | 5020 standard | fake | yes | on | 99.8 | 2506 | **39.8** | 36.0 | 39.5 | 43.2 | 45.6 | 51.4
-browscap | 5020 full | real | no | off | 58.4 | 2506 | **23.3** | 2.8 | 23.3 | 28.7 | 31.3 | 39.3
-browscap | 5020 full | fake | no | off | 51.7 | 2506 | **20.6** | 16.8 | 19.7 | 27.4 | 33.2 | 69.2
-browscap | 5020 full | real | no | on | 59.9 | 2506 | **23.9** | 2.7 | 24.2 | 29.1 | 31.7 | 38.8
-browscap | 5020 full | fake | no | on | 48.9 | 2506 | **19.5** | 16.9 | 19.3 | 21.6 | 23.0 | 30.0
-browscap | 5020 full | real | yes | off | 108.3 | 2506 | **43.2** | 5.0 | 43.3 | 48.1 | 51.6 | 62.0
-browscap | 5020 full | fake | yes | off | 98.4 | 2506 | **39.3** | 36.9 | 39.0 | 41.9 | 44.0 | 54.7
-browscap | 5020 full | real | yes | on | 110.1 | 2506 | **44.0** | 5.6 | 44.0 | 50.0 | 53.1 | 77.5
-browscap | 5020 full | fake | yes | on | 101.8 | 2506 | **40.6** | 36.6 | 40.3 | 44.1 | 45.8 | 49.7
-
+browscap - real - one per script - opcache off run for 56.3 sec (2506 calls) per call = avg 22.5 ms / min 2.6 ms / 50% in 22.8 ms / 95% in 26.8 ms / 99% in 28.3 ms / max 34.5 ms
+browscap - fake - one per script - opcache off run for 46.8 sec (2506 calls) per call = avg 18.7 ms / min 16.7 ms / 50% in 18.6 ms / 95% in 20.1 ms / 99% in 21.7 ms / max 26.0 ms
+browscap - real - one per script - opcache on run for 59.9 sec (2506 calls) per call = avg 23.9 ms / min 2.5 ms / 50% in 24.0 ms / 95% in 29.2 ms / 99% in 32.3 ms / max 41.1 ms
+browscap - fake - one per script - opcache on run for 50.4 sec (2506 calls) per call = avg 20.1 ms / min 17.3 ms / 50% in 20.1 ms / 95% in 21.8 ms / 99% in 23.0 ms / max 24.9 ms
+browscap - real - bulk - opcache off run for 111.0 sec (2506 calls) per call = avg 44.3 ms / min 5.8 ms / 50% in 44.6 ms / 95% in 49.7 ms / 99% in 52.4 ms / max 58.6 ms
+browscap - fake - bulk - opcache off run for 96.3 sec (2506 calls) per call = avg 38.4 ms / min 36.2 ms / 50% in 38.2 ms / 95% in 40.5 ms / 99% in 42.9 ms / max 46.4 ms
+browscap - real - bulk - opcache on run for 113.2 sec (2506 calls) per call = avg 45.2 ms / min 5.6 ms / 50% in 45.0 ms / 95% in 51.7 ms / 99% in 54.9 ms / max 61.9 ms
+browscap - fake - bulk - opcache on run for 103.2 sec (2506 calls) per call = avg 41.2 ms / min 37.4 ms / 50% in 40.9 ms / 95% in 43.6 ms / 99% in 46.3 ms / max 80.5 ms
+Mobile_Detect partial - real - one per script - opcache off run for 6.0 sec (2506 calls) per call = avg 2.4 ms / min 0.3 ms / 50% in 2.3 ms / 95% in 3.7 ms / 99% in 4.9 ms / max 6.2 ms
+Mobile_Detect partial - fake - one per script - opcache off run for 5.8 sec (2506 calls) per call = avg 2.3 ms / min 1.0 ms / 50% in 2.3 ms / 95% in 3.0 ms / 99% in 3.3 ms / max 15.5 ms
+Mobile_Detect partial - real - one per script - opcache on run for 4.4 sec (2506 calls) per call = avg 1.7 ms / min 0.0 ms / 50% in 1.6 ms / 95% in 3.0 ms / 99% in 4.4 ms / max 6.5 ms
+Mobile_Detect partial - fake - one per script - opcache on run for 4.2 sec (2506 calls) per call = avg 1.7 ms / min 0.3 ms / 50% in 1.6 ms / 95% in 2.4 ms / 99% in 2.6 ms / max 11.4 ms
+Mobile_Detect partial - real - bulk - opcache off run for 4.0 sec (2506 calls) per call = avg 1.6 ms / min 0.0 ms / 50% in 1.5 ms / 95% in 2.8 ms / 99% in 3.8 ms / max 5.1 ms
+Mobile_Detect partial - fake - bulk - opcache off run for 3.8 sec (2506 calls) per call = avg 1.5 ms / min 0.5 ms / 50% in 1.5 ms / 95% in 2.2 ms / 99% in 2.4 ms / max 2.7 ms
+Mobile_Detect partial - real - bulk - opcache on run for 4.1 sec (2506 calls) per call = avg 1.6 ms / min 0.0 ms / 50% in 1.5 ms / 95% in 2.9 ms / 99% in 3.9 ms / max 5.6 ms
+Mobile_Detect partial - fake - bulk - opcache on run for 3.9 sec (2506 calls) per call = avg 1.6 ms / min 0.2 ms / 50% in 1.5 ms / 95% in 2.2 ms / 99% in 2.5 ms / max 3.0 ms
+Mobile_Detect full - real - one per script - opcache off run for 16.1 sec (2506 calls) per call = avg 6.4 ms / min 0.8 ms / 50% in 6.5 ms / 95% in 9.3 ms / 99% in 12.5 ms / max 15.4 ms
+Mobile_Detect full - fake - one per script - opcache off run for 16.7 sec (2506 calls) per call = avg 6.7 ms / min 3.3 ms / 50% in 6.7 ms / 95% in 7.5 ms / 99% in 7.8 ms / max 8.0 ms
+Mobile_Detect full - real - one per script - opcache on run for 14.5 sec (2506 calls) per call = avg 5.8 ms / min 0.4 ms / 50% in 5.9 ms / 95% in 8.8 ms / 99% in 12.4 ms / max 15.3 ms
+Mobile_Detect full - fake - one per script - opcache on run for 15.2 sec (2506 calls) per call = avg 6.1 ms / min 2.5 ms / 50% in 6.1 ms / 95% in 6.9 ms / 99% in 7.3 ms / max 8.1 ms
+Mobile_Detect full - real - bulk - opcache off run for 14.0 sec (2506 calls) per call = avg 5.6 ms / min 0.2 ms / 50% in 5.7 ms / 95% in 8.4 ms / 99% in 11.6 ms / max 14.9 ms
+Mobile_Detect full - fake - bulk - opcache off run for 14.5 sec (2506 calls) per call = avg 5.8 ms / min 2.4 ms / 50% in 5.8 ms / 95% in 6.6 ms / 99% in 7.0 ms / max 7.4 ms
+Mobile_Detect full - real - bulk - opcache on run for 14.9 sec (2506 calls) per call = avg 5.9 ms / min 0.3 ms / 50% in 6.1 ms / 95% in 8.9 ms / 99% in 12.8 ms / max 14.9 ms
+Mobile_Detect full - fake - bulk - opcache on run for 16.6 sec (2506 calls) per call = avg 6.6 ms / min 2.7 ms / 50% in 6.7 ms / 95% in 7.5 ms / 99% in 7.9 ms / max 8.6 ms
+ua-parser old - real - one per script - opcache off run for 3.3 sec (2506 calls) per call = avg 1.3 ms / min 0.1 ms / 50% in 1.3 ms / 95% in 2.0 ms / 99% in 2.3 ms / max 2.9 ms
+ua-parser old - fake - one per script - opcache off run for 3.8 sec (2506 calls) per call = avg 1.5 ms / min 0.2 ms / 50% in 1.5 ms / 95% in 2.2 ms / 99% in 2.5 ms / max 3.4 ms
+ua-parser old - real - one per script - opcache on run for 2.7 sec (2506 calls) per call = avg 1.1 ms / min 0.0 ms / 50% in 1.1 ms / 95% in 1.8 ms / 99% in 2.1 ms / max 3.1 ms
+ua-parser old - fake - one per script - opcache on run for 3.3 sec (2506 calls) per call = avg 1.3 ms / min 0.3 ms / 50% in 1.3 ms / 95% in 2.0 ms / 99% in 2.2 ms / max 3.1 ms
+ua-parser old - real - bulk - opcache off run for 1.4 sec (2506 calls) per call = avg 0.6 ms / min 0.0 ms / 50% in 0.5 ms / 95% in 1.1 ms / 99% in 1.4 ms / max 2.2 ms
+ua-parser old - fake - bulk - opcache off run for 1.8 sec (2506 calls) per call = avg 0.7 ms / min 0.0 ms / 50% in 0.7 ms / 95% in 1.2 ms / 99% in 1.5 ms / max 2.6 ms
+ua-parser old - real - bulk - opcache on run for 1.3 sec (2506 calls) per call = avg 0.5 ms / min 0.0 ms / 50% in 0.5 ms / 95% in 1.0 ms / 99% in 1.3 ms / max 2.6 ms
+ua-parser old - fake - bulk - opcache on run for 2.1 sec (2506 calls) per call = avg 0.9 ms / min 0.0 ms / 50% in 0.8 ms / 95% in 1.4 ms / 99% in 1.7 ms / max 2.5 ms
+ua-parser new - real - one per script - opcache off run for 3.3 sec (2506 calls) per call = avg 1.3 ms / min 0.2 ms / 50% in 1.3 ms / 95% in 2.0 ms / 99% in 2.3 ms / max 2.8 ms
+ua-parser new - fake - one per script - opcache off run for 3.9 sec (2506 calls) per call = avg 1.5 ms / min 0.5 ms / 50% in 1.5 ms / 95% in 2.2 ms / 99% in 2.5 ms / max 3.3 ms
+ua-parser new - real - one per script - opcache on run for 1.6 sec (2506 calls) per call = avg 0.6 ms / min 0.0 ms / 50% in 0.6 ms / 95% in 1.1 ms / 99% in 1.5 ms / max 2.1 ms
+ua-parser new - fake - one per script - opcache on run for 2.2 sec (2506 calls) per call = avg 0.9 ms / min 0.0 ms / 50% in 0.8 ms / 95% in 1.4 ms / 99% in 1.7 ms / max 2.8 ms
+ua-parser new - real - bulk - opcache off run for 1.3 sec (2506 calls) per call = avg 0.5 ms / min 0.0 ms / 50% in 0.5 ms / 95% in 0.9 ms / 99% in 1.3 ms / max 2.2 ms
+ua-parser new - fake - bulk - opcache off run for 1.9 sec (2506 calls) per call = avg 0.8 ms / min 0.0 ms / 50% in 0.7 ms / 95% in 1.3 ms / 99% in 1.5 ms / max 2.0 ms
+ua-parser new - real - bulk - opcache on run for 1.3 sec (2506 calls) per call = avg 0.5 ms / min 0.0 ms / 50% in 0.5 ms / 95% in 1.0 ms / 99% in 1.4 ms / max 2.1 ms
+ua-parser new - fake - bulk - opcache on run for 1.9 sec (2506 calls) per call = avg 0.8 ms / min 0.0 ms / 50% in 0.7 ms / 95% in 1.3 ms / 99% in 1.5 ms / max 2.3 ms

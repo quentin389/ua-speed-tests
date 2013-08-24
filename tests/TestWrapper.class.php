@@ -9,13 +9,17 @@ class TestWrapper
   const CLASS_BROWSCAP = 'browscap';
   const CLASS_MOBILE_DETECT_PARTIAL = 'md-short';
   const CLASS_MOBILE_DETECT_FULL = 'md-full';
+  const CLASS_UA_PARSER_NEW = 'uaparser-new';
+  const CLASS_UA_PARSER_OLD = 'uaparser-old';
   
   const REAL_TO_FAKE_RATIO = 1;
   
   protected static $available_classes = array(
     self::CLASS_BROWSCAP => 'browscap',
     self::CLASS_MOBILE_DETECT_PARTIAL => 'Mobile_Detect partial',
-    self::CLASS_MOBILE_DETECT_FULL => 'Mobile_Detect full'
+    self::CLASS_MOBILE_DETECT_FULL => 'Mobile_Detect full',
+    self::CLASS_UA_PARSER_NEW => 'ua-parser new',
+    self::CLASS_UA_PARSER_OLD => 'ua-parser old'
   );
   
   protected $has_opcache;
@@ -47,6 +51,12 @@ class TestWrapper
     
     $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, true, true);
     $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, false, true);
+    
+    $this->executeOneTest(self::CLASS_UA_PARSER_OLD, true, true);
+    $this->executeOneTest(self::CLASS_UA_PARSER_OLD, false, true);
+    
+    $this->executeOneTest(self::CLASS_UA_PARSER_NEW, true, true);
+    $this->executeOneTest(self::CLASS_UA_PARSER_NEW, false, true);
     
     if ($this->echo_progress)
     {
@@ -144,9 +154,8 @@ class TestWrapper
     TWTimer::begin($timer_name . ' - real - bulk', $this->has_opcache);
     foreach ($this->getRealUserAgents() as $one_agent)
     {
-      TWTimer::start();
-      $this->$method($one_agent, $result);
-      TWTimer::stop();
+      $time = $this->$method($one_agent, $result);
+      TWTimer::add($time);
     }
     TWTimer::end();
     
@@ -154,11 +163,38 @@ class TestWrapper
     TWTimer::begin($timer_name . ' - fake - bulk', $this->has_opcache);
     foreach ($this->getFakeUserAgents() as $one_agent)
     {
-      TWTimer::start();
-      $this->$method($one_agent, $result);
-      TWTimer::stop();
+      $time = $this->$method($one_agent, $result);
+      TWTimer::add($time);
     }
     TWTimer::end();
+  }
+  
+  protected function bulkInitUaparserOld()
+  {
+    require_once 'uaparser/uaparser-old.php';
+    
+    return new UAParserOld('uaparser/regexes.json');
+  }
+  
+  protected function bulkTestUaparserOld($user_agent, UAParserOld $uap)
+  {
+    $time = microtime(true);
+    $uap->parse($user_agent);
+    return microtime(true) - $time;
+  }
+  
+  protected function bulkInitUaparserNew()
+  {
+    require_once 'uaparser/uaparser-new.php';
+    
+    return new UAParserNew('uaparser/regexes.php');
+  }
+  
+  protected function bulkTestUaparserNew($user_agent, UAParserNew $uap)
+  {
+    $time = microtime(true);
+    $uap->parse($user_agent);
+    return microtime(true) - $time;
   }
   
   protected function bulkInitMdShort()
@@ -181,13 +217,16 @@ class TestWrapper
   
   protected function bulkTestMdShort($user_agent, Mobile_Detect $md)
   {
+    $time = microtime(true);
     $md->setUserAgent($user_agent);
     $md->isMobile();
     $md->isTablet();
+    return microtime(true) - $time;
   }
   
   protected function bulkTestMdFull($user_agent, Mobile_Detect $md)
   {
+    $time = microtime(true);
     $md->setUserAgent($user_agent);
     $md->isMobile();
     $md->isTablet();
@@ -197,6 +236,7 @@ class TestWrapper
     foreach ($this->md_devices as $one_device) if ($md->is($one_device)) break;
     foreach ($this->md_oses as $one_os) if ($md->is($one_os)) break;
     $md->mobileGrade();
+    return microtime(true) - $time;
   }
   
   protected function bulkInitBrowscap()
@@ -206,7 +246,9 @@ class TestWrapper
   
   protected function bulkTestBrowscap($user_agent)
   {
+    $time = microtime(true);
     get_browser($user_agent);
+    return microtime(true) - $time;
   }
   
   protected function executeExternalTest($uri, $user_agent)

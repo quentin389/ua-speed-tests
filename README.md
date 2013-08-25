@@ -5,7 +5,7 @@ Compare performance of user agent detecting classes used in PHP. Single and bulk
 
 The classes are all CPU bound (at least on my config with apache).
 
-For now see results.processed.md or results.full.txt for the results.
+For now see [results.processed.md](results.processed.md) or [results.full.txt](results.full.txt) for the results.
 
 * **browscap** - PHP standard `get_browser()` call (btw: add benchmarks for lite/full source file.
 * **Mobile_Detect partial** - `Mobile_Detect->isMobile()` + `Mobile_Detect->isTablet()` calls.

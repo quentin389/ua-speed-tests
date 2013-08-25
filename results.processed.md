@@ -37,19 +37,19 @@ phpbrowscap mark2 | full | fake | on | 6.0 | 2506 | 2.4 | 1.0 | 2.3 | 3.2 | 3.7 
 ### bulk processing, opcache off
 name | version | ua list | total (sec) | calls | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
 :--- | :--- |:---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---:
-Mobile_Detect | partial | real - | 4.1 | 2506 | 1.6 | 0.0 | 1.6 | 2.9 | 3.8 | 5.1
-Mobile_Detect | full | real - | 14.1 | 2506 | 5.6 | 0.4 | 5.8 | 8.5 | 11.9 | 15.0
-ua-parser | original | real - | 1.3 | 2506 | 0.5 | 0.0 | 0.5 | 1.0 | 1.4 | 2.8
-ua-parser | revised | real - | 1.3 | 2506 | 0.5 | 0.0 | 0.5 | 1.0 | 1.3 | 2.1
-browscap | lite | real - | 9.1 | 2506 | 3.6 | 0.2 | 3.5 | 6.7 | 7.8 | 12.5
-browscap | lite | fake - | 2.8 | 2506 | 1.1 | 0.1 | 1.0 | 1.7 | 2.0 | 3.4
-browscap | standard | real - | 112.9 | 2506 | 45.1 | 5.4 | 45.3 | 50.0 | 52.1 | 58.5
-browscap | full | real - | 108.6 | 2506 | 43.3 | 5.1 | 43.6 | 48.1 | 50.4 | 60.9
-phpbrowscap original | standard | real - | 24.1 | 2506 | 9.6 | 0.0 | 1.8 | 42.7 | 47.0 | 269.2
-phpbrowscap original | standard | fake - | 107.9 | 2506 | 43.1 | 39.9 | 42.8 | 45.5 | 47.5 | 53.3
-phpbrowscap original | full | real - | 24.2 | 2506 | 9.7 | 0.0 | 1.8 | 43.3 | 47.4 | 285.2
-phpbrowscap original | full | fake - | 109.4 | 2506 | 43.7 | 39.7 | 43.3 | 47.5 | 50.7 | 78.1
-phpbrowscap mark2 | standard | real - | 2.0 | 2506 | 0.8 | 0.0 | 0.4 | 2.3 | 4.2 | 307.4
-phpbrowscap mark2 | standard | fake - | 3.7 | 2506 | 1.5 | 0.2 | 1.4 | 2.1 | 2.4 | 3.2
-phpbrowscap mark2 | full | real - | 2.1 | 2506 | 0.8 | 0.0 | 0.4 | 2.4 | 4.4 | 328.8
-phpbrowscap mark2 | full | fake - | 3.7 | 2506 | 1.5 | 0.5 | 1.4 | 2.1 | 2.4 | 3.3
+Mobile_Detect | partial | real | 4.1 | 2506 | 1.6 | 0.0 | 1.6 | 2.9 | 3.8 | 5.1
+Mobile_Detect | full | real | 14.1 | 2506 | 5.6 | 0.4 | 5.8 | 8.5 | 11.9 | 15.0
+ua-parser | original | real | 1.3 | 2506 | 0.5 | 0.0 | 0.5 | 1.0 | 1.4 | 2.8
+ua-parser | revised | real | 1.3 | 2506 | 0.5 | 0.0 | 0.5 | 1.0 | 1.3 | 2.1
+browscap | lite | real | 9.1 | 2506 | 3.6 | 0.2 | 3.5 | 6.7 | 7.8 | 12.5
+browscap | lite | fake | 2.8 | 2506 | 1.1 | 0.1 | 1.0 | 1.7 | 2.0 | 3.4
+browscap | standard | real | 112.9 | 2506 | 45.1 | 5.4 | 45.3 | 50.0 | 52.1 | 58.5
+browscap | full | real | 108.6 | 2506 | 43.3 | 5.1 | 43.6 | 48.1 | 50.4 | 60.9
+phpbrowscap original | standard | real | 24.1 | 2506 | 9.6 | 0.0 | 1.8 | 42.7 | 47.0 | 269.2
+phpbrowscap original | standard | fake | 107.9 | 2506 | 43.1 | 39.9 | 42.8 | 45.5 | 47.5 | 53.3
+phpbrowscap original | full | real | 24.2 | 2506 | 9.7 | 0.0 | 1.8 | 43.3 | 47.4 | 285.2
+phpbrowscap original | full | fake | 109.4 | 2506 | 43.7 | 39.7 | 43.3 | 47.5 | 50.7 | 78.1
+phpbrowscap mark2 | standard | real | 2.0 | 2506 | 0.8 | 0.0 | 0.4 | 2.3 | 4.2 | 307.4
+phpbrowscap mark2 | standard | fake | 3.7 | 2506 | 1.5 | 0.2 | 1.4 | 2.1 | 2.4 | 3.2
+phpbrowscap mark2 | full | real | 2.1 | 2506 | 0.8 | 0.0 | 0.4 | 2.4 | 4.4 | 328.8
+phpbrowscap mark2 | full | fake | 3.7 | 2506 | 1.5 | 0.5 | 1.4 | 2.1 | 2.4 | 3.3

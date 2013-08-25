@@ -1,5 +1,8 @@
 <?php
 
+use phpbrowscap\Browscap;
+use phpbrowscapmk2\Browscap as BrowscapMk2;
+
 require_once 'TWTimer.class.php';
 
 class TestWrapper
@@ -7,6 +10,8 @@ class TestWrapper
   const TEST_USER_AGENT = 'thisisacompletelyrandomstringnoreallyitis';
   
   const CLASS_BROWSCAP = 'browscap';
+  const CLASS_PHPBROWSCAP = 'phpb';
+  const CLASS_PHPBROWSCAP_MARK2 = 'phpb_mk2';
   const CLASS_MOBILE_DETECT_PARTIAL = 'md-short';
   const CLASS_MOBILE_DETECT_FULL = 'md-full';
   const CLASS_UA_PARSER_NEW = 'uaparser-new';
@@ -16,10 +21,24 @@ class TestWrapper
   
   protected static $available_classes = array(
     self::CLASS_BROWSCAP => 'browscap',
+    self::CLASS_PHPBROWSCAP => 'phpbrowscap original',
+    self::CLASS_PHPBROWSCAP_MARK2 => 'phpbrowscap mark2',
     self::CLASS_MOBILE_DETECT_PARTIAL => 'Mobile_Detect partial',
     self::CLASS_MOBILE_DETECT_FULL => 'Mobile_Detect full',
     self::CLASS_UA_PARSER_NEW => 'ua-parser new',
     self::CLASS_UA_PARSER_OLD => 'ua-parser old'
+  );
+  
+  protected static $browscap_classes = array(
+    self::CLASS_BROWSCAP,
+    self::CLASS_PHPBROWSCAP,
+    self::CLASS_PHPBROWSCAP_MARK2
+  );
+  
+  protected static $browscap_files = array(
+    'lite_php_browscap.ini' => ' (lite)',
+    'php_browscap.ini' => ' (standard)',
+    'full_php_browscap.ini' => ' (full)'
   );
   
   protected $has_opcache;
@@ -43,20 +62,26 @@ class TestWrapper
   
   public function executeAllTests()
   {
-    $this->executeOneTest(self::CLASS_BROWSCAP, true, true);
     $this->executeOneTest(self::CLASS_BROWSCAP, false, true);
+    $this->executeOneTest(self::CLASS_BROWSCAP, true, true);
     
-    $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, true, true);
+    $this->executeOneTest(self::CLASS_PHPBROWSCAP, false, true);
+    $this->executeOneTest(self::CLASS_PHPBROWSCAP, true, true);
+    
+    $this->executeOneTest(self::CLASS_PHPBROWSCAP_MARK2, false, true);
+    $this->executeOneTest(self::CLASS_PHPBROWSCAP_MARK2, true, true);
+    
     $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, false, true);
+    $this->executeOneTest(self::CLASS_MOBILE_DETECT_PARTIAL, true, true);
     
-    $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, true, true);
     $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, false, true);
+    $this->executeOneTest(self::CLASS_MOBILE_DETECT_FULL, true, true);
     
-    $this->executeOneTest(self::CLASS_UA_PARSER_OLD, true, true);
     $this->executeOneTest(self::CLASS_UA_PARSER_OLD, false, true);
+    $this->executeOneTest(self::CLASS_UA_PARSER_OLD, true, true);
     
-    $this->executeOneTest(self::CLASS_UA_PARSER_NEW, true, true);
     $this->executeOneTest(self::CLASS_UA_PARSER_NEW, false, true);
+    $this->executeOneTest(self::CLASS_UA_PARSER_NEW, true, true);
     
     if ($this->echo_progress)
     {
@@ -75,6 +100,18 @@ class TestWrapper
       throw new Exception('Class name not one of: ' . implode(', ', array_keys(self::$available_classes)));
     }
     
+    $suffix = '';
+    
+    if (in_array($class_name, self::$browscap_classes))
+    {
+      @unlink('phpb/cache.php');
+      @unlink('phpb/browscap.ini');
+      @unlink('phpb_mk2/cache.php');
+      @unlink('phpb_mk2/browscap.ini');
+      
+      $suffix = @self::$browscap_files[basename(ini_get('browscap'))];
+    }
+    
     $bulk_check = self::getBoolean($bulk_check);
     
     if ($this->echo_progress)
@@ -84,11 +121,11 @@ class TestWrapper
     
     if ($bulk_check)
     {
-      $this->testBulk($class_name);
+      $this->testBulk($class_name, $suffix);
     }
     else
     {
-      $this->testOnePerScript($class_name);
+      $this->testOnePerScript($class_name, $suffix);
     }
     
     if ($no_summary)
@@ -106,9 +143,9 @@ class TestWrapper
     }
   }
   
-  protected function testOnePerScript($class)
+  protected function testOnePerScript($class, $suffix = '')
   {
-    $timer_name = self::$available_classes[$class];
+    $timer_name = self::$available_classes[$class] . $suffix;
     
     if ($pos = strpos($class, '-'))
     {
@@ -141,10 +178,10 @@ class TestWrapper
     TWTimer::end();
   }
   
-  protected function testBulk($class)
+  protected function testBulk($class, $suffix = '')
   {
     $cc_class_name = self::nameToCamelCase($class);
-    $timer_name = self::$available_classes[$class];
+    $timer_name = self::$available_classes[$class] . $suffix;
     $method = 'bulkTest' . $cc_class_name;
     
     // initialize and preload
@@ -167,6 +204,42 @@ class TestWrapper
       TWTimer::add($time);
     }
     TWTimer::end();
+  }
+  
+  protected function bulkInitPhpb()
+  {
+    require_once 'phpb/Browscap.php';
+    
+    $bc = new Browscap('phpb/');
+    $bc->localFile = ini_get('browscap');
+    $bc->updateMethod = Browscap::UPDATE_LOCAL;
+    
+    return $bc;
+  }
+  
+  protected function bulkTestPhpb($user_agent, Browscap $bc)
+  {
+    $time = microtime(true);
+    $bc->getBrowser($user_agent);
+    return microtime(true) - $time;
+  }
+  
+  protected function bulkInitPhpb_mk2()
+  {
+    require_once 'phpb_mk2/Browscap.php';
+    
+    $bc = new BrowscapMk2('phpb_mk2/');
+    $bc->localFile = ini_get('browscap');
+    $bc->updateMethod = BrowscapMk2::UPDATE_LOCAL;
+    
+    return $bc;
+  }
+  
+  protected function bulkTestPhpb_mk2($user_agent, BrowscapMk2 $bc)
+  {
+    $time = microtime(true);
+    $x = $bc->getBrowser($user_agent);
+    return microtime(true) - $time;
   }
   
   protected function bulkInitUaparserOld()

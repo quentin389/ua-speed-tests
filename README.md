@@ -26,7 +26,7 @@ Each row is one test. Eeach test was performed on 2506 user agent strings.
 ### one per script (typical usage)
 name | version | ua list | opcache | total (sec) | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
 :--- | :--- | :---: | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---:
-[Mobile_Detect](https://github.com/serbanghita/Mobile-Detect) | partial | real | off | 6.0 | 2.4 | 0.3 | **2.3** | 3.6 | 4.7 | 5.9
+[Mobile Detect](https://github.com/serbanghita/Mobile-Detect) | partial | real | off | 6.0 | 2.4 | 0.3 | **2.3** | 3.6 | 4.7 | 5.9
  | partial | real | on | 4.2 | 1.7 | 0.0 | **1.6** | 3.0 | 4.1 | 7.6
  | full | real | off | 16.3 | 6.5 | 0.8 | **6.6** | 9.3 | 12.6 | 16.9
  | full | real | on | 14.2 | 5.7 | 0.5 | **5.8** | 8.5 | 12.0 | 14.4
@@ -62,7 +62,7 @@ name | version | ua list | opcache | total (sec) | avg (ms) | min (ms) | 50% (ms
 ### bulk processing, opcache off
 name | version | ua list | total (sec) | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
 :--- | :--- |:---: | ---: | ---: | ---: | ---: | ---: | ---: | ---:
-[Mobile_Detect](https://github.com/serbanghita/Mobile-Detect) | partial | real | 4.1 | 1.6 | 0.0 | **1.6** | 2.9 | 3.8 | 5.1
+[Mobile Detect](https://github.com/serbanghita/Mobile-Detect) | partial | real | 4.1 | 1.6 | 0.0 | **1.6** | 2.9 | 3.8 | 5.1
  | full | real | 14.1 | 5.6 | 0.4 | **5.8** | 8.5 | 11.9 | 15.0
 [ua-parser](https://github.com/tobie/ua-parser) | original | real | 1.3 | 0.5 | 0.0 | **0.5** | 1.0 | 1.4 | 2.8
  | revised | real | 1.3 | 0.5 | 0.0 | **0.5** | 1.0 | 1.3 | 2.1

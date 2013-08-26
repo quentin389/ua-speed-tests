@@ -23,6 +23,8 @@ See [results.full.txt](results.full.txt) for raw results.
 
 Each row is one test. Eeach test was performed on 2506 user agent strings.
 
+**Note:** `phpbrowscap mark2` is now merged into original `phpbrowscap` repository as a new version. So enjoy the speed boost!
+
 ### one per script (typical usage)
 name | ver. | ua list | op cache | total (sec) | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
 :--- | :--- | :---: | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---:

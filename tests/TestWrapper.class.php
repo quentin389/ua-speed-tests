@@ -16,6 +16,7 @@ class TestWrapper
   const CLASS_MOBILE_DETECT_FULL = 'md-full';
   const CLASS_UA_PARSER_NEW = 'uaparser-new';
   const CLASS_UA_PARSER_OLD = 'uaparser-old';
+  const CLASS_USER_AGENT_INFO = 'uai';
   
   const REAL_TO_FAKE_RATIO = 1;
   
@@ -26,7 +27,8 @@ class TestWrapper
     self::CLASS_MOBILE_DETECT_PARTIAL => 'Mobile_Detect partial',
     self::CLASS_MOBILE_DETECT_FULL => 'Mobile_Detect full',
     self::CLASS_UA_PARSER_NEW => 'ua-parser new',
-    self::CLASS_UA_PARSER_OLD => 'ua-parser old'
+    self::CLASS_UA_PARSER_OLD => 'ua-parser old',
+    self::CLASS_USER_AGENT_INFO => 'UserAgentInfo'
   );
   
   protected static $browscap_classes = array(
@@ -82,6 +84,9 @@ class TestWrapper
     
     $this->executeOneTest(self::CLASS_UA_PARSER_NEW, false, true);
     $this->executeOneTest(self::CLASS_UA_PARSER_NEW, true, true);
+    
+    $this->executeOneTest(self::CLASS_USER_AGENT_INFO, false, true);
+    $this->executeOneTest(self::CLASS_USER_AGENT_INFO, true, true);
     
     if ($this->echo_progress)
     {
@@ -321,6 +326,20 @@ class TestWrapper
   {
     $time = microtime(true);
     get_browser($user_agent);
+    return microtime(true) - $time;
+  }
+  
+  protected function bulkInitUai()
+  {
+    require_once 'uai/UserAgentInfoPeer.class.php';
+    
+    UserAgentInfoPeer::getMy();
+  }
+  
+  protected function bulkTestUai($user_agent)
+  {
+    $time = microtime(true);
+    UserAgentInfoPeer::getOther($user_agent);
     return microtime(true) - $time;
   }
   

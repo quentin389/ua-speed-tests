@@ -17,6 +17,8 @@ See [results.full.txt](results.full.txt) for raw results.
 - **Mobile_Detect 'full'** - get as much information as you can
 - **ua-parser 'original'** - current version
 - **ua-parser 'revised'** - source json file replaced with php array file
+- **UserAgentInfo 'cache empty'** - parse an unknown user agent in UserAgentInfo and then save it to cache
+- **UserAgentInfo 'from cache'** - load UserAgentInfo and get user agent information from cache (most typical situation)
 - **'lite'**, **'std'**, **'full'** - different versions of the source file for browscap based parsers
 - **phpbrowscap max times** - this is a time it takes to parse the downloaded source file into the cache file format;
   cache regeneration occurs rarely (default: every 5 days)
@@ -60,6 +62,13 @@ name | ver. | ua list | op cache | total (sec) | avg (ms) | min (ms) | 50% (ms) 
  | full | real | on | 4.2 | 1.7 | 0.0 | **1.2** | 3.6 | 5.8 | _312.0_
  | full | fake | off | 21.3 | 8.5 | 6.7 | **8.5** | 9.4 | 9.9 | 37.5
  | full | fake | on | 6.0 | 2.4 | 1.0 | **2.3** | 3.2 | 3.7 | 24.0
+[UserAgentInfo](https://github.com/quentin389/UserAgentInfo) | cache empty | real | off | 37.8 | 15.1 | 2.6 | **14.9** | 18.5 | 20.4 | 26.4
+ | cache empty | fake | off | 40.5 | 16.1 | 13.4 | **15.9** | 18.8 | 20.8 | 25.9
+ | from cache | real | off | 6.6 | 2.6 | 1.7 | **2.5** | 3.3 | 3.7 | 26.0
+ | cache empty | real | on | 18.7 | 7.5 | 0.5 | **7.3** | 10.9 | 13.0 | 29.4
+ | cache empty | fake | on | 19.0 | 7.6 | 5.5 | **7.6** | 8.7 | 9.1 | 13.4
+ | from cache | real | on | 1.2 | 0.5 | 0.1 | **0.4** | 0.7 | 1.2 | 2.8
+
 
 ### bulk processing, opcache off
 name | ver. | ua list | total (sec) | avg (ms) | min (ms) | 50% (ms) | 95% (ms) | 99% (ms) | max (ms)
@@ -80,6 +89,10 @@ name | ver. | ua list | total (sec) | avg (ms) | min (ms) | 50% (ms) | 95% (ms) 
  | std | fake | 3.7 | 1.5 | 0.2 | **1.4** | 2.1 | 2.4 | 3.2
  | full | real | 2.1 | 0.8 | 0.0 | **0.4** | 2.4 | 4.4 | _328.8_
  | full | fake | 3.7 | 1.5 | 0.5 | **1.4** | 2.1 | 2.4 | 3.3
+[UserAgentInfo](https://github.com/quentin389/UserAgentInfo) | cache empty | real | 15.3 | 6.1 | 0.0 | **6.0** | 9.3 | 10.9 | 17.9
+ | cache empty | fake | 18.8 | 7.5 | 3.8 | **7.5** | 8.5 | 9.1 | 20.7
+ | from cache | real | 0.5 | 0.2 | 0.0 | **0.2** | 0.2 | 0.5 | 1.0
+ 
 
 TODO
 ====
